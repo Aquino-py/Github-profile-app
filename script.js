@@ -7,17 +7,26 @@ const search = document.getElementById('search')
 // start the app with a search
 getUser('Aquino-py')
 
-async function getUser(user) {
-    const response = await fetch(APIURL + user)
+async function getUser(username) {
+    const response = await fetch(APIURL + username)
     const data = await response.json()
 
     createUserCard(data)
+
+    getRepos(username)
+}
+
+async function getRepos(username) {
+    const response = await fetch(APIURL + username + '/repos')
+    const data = await response.json()
+
+    addReposToCard(data)
 }
 
 function createUserCard(user) {
     const cardHTML = `
         <div class="card">
-            <div class="img-container">
+            <div>
                 <img src="${user.avatar_url}" alt="${user.name}" class="avatar">
             </div>
             <div class="user-info">
@@ -25,15 +34,31 @@ function createUserCard(user) {
                 <p>${user.bio}</p>
 
                 <ul class="info">
-                    <li>${user.followers}</li>
-                    <li>${user.following}</li>
-                    <li>${user.public_repos}</li>
+                    <li>${user.followers}<strong>Followers</strong></li>
+                    <li>${user.following}<strong>Following</strong></li>
+                    <li>${user.public_repos}<strong>Repos</strong></li>
                 </ul>
+                <div id="repos"></div>
             </div>
         </div>
     `
 
     main.innerHTML = cardHTML
+}
+
+function addReposToCard(repos) {
+    const reposEl = document.getElementById('repos')
+
+    repos.sort((a, b) => b.stargazers_count - a.stargazers_count).slice(0, 10).forEach(repo => {
+        const repoEl = document.createElement('a')
+        repoEl.classList.add('repo')
+
+        repoEl.href = repo.html_url
+        repoEl.target = '_blank'
+        repoEl.innerText = repo.name
+
+        reposEl.appendChild(repoEl)
+    })
 }
 
 form.addEventListener('submit', (e) => {

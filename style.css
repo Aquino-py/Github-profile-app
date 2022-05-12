@@ -46,12 +46,6 @@ input:focus {
     max-width: 800px;
 }
 
-.img-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 .avatar {
     border: 10px solid #2a2a72;
     border-radius: 50%;
@@ -73,5 +67,27 @@ input:focus {
     justify-content: space-between;
     list-style-type: none;
     padding: 0;
-    max-width: 300px;
+    max-width: 400px;
+}
+
+.user-info ul li {
+    display: flex;
+    align-items: center;
+}
+
+.user-info ul li strong {
+    font-size: 0.85rem;
+    margin-left: 0.5rem;
+}
+
+.repo {
+    display: inline-block;
+    border-radius: 5px;
+    background-color: #4c2885;
+    color: white;
+    font-size: 0.7rem;
+    padding: 0.25rem 0.5rem;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    text-decoration: none;
 }
